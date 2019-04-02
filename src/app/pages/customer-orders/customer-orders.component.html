@@ -1,0 +1,72 @@
+<ngx-spinner bgColor="rgba(51,51,51,0.8)"
+size="large"
+color="#f27100"
+type="ball-clip-rotate-multiple">
+<p class="text-white"> Getting your orders (if any)... </p>
+</ngx-spinner>
+<div class="container mt-4" style="padding-top: 68px;">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h3><i class="fas fa-clipboard-list mr-3"></i>Your orders</h3>
+    </div>
+    <div class="col-sm-6 offset-sm-3 col-md-4 offset-sm-4 mt-3">
+      <input type="text" class="form-control" placeholder="Your seat number" (change)="getOrders($event)" (keyup)="getOrders($event)">
+    </div>
+  </div>
+  <div class="row" *ngIf="orders.length > 0">
+    <div class="col-sm-12 mt-md-3" *ngFor="let order of orders; let i = index;">
+      <div class="card" style="background: #f9f9f9">
+        <div class="card-body">
+          <div class="row mt-3" *ngFor="let item of order.Orders; let i = index;">
+            <div class="col-sm-3 text-center">
+              <img [src]="item.dishImage" class="img-thumbnail rounded" width="100%" style="max-height: 20  0px; min-height: 200px;">
+            </div>
+            <div class="col-sm-3 text-center mt-md-5 text-dark">
+                <p>{{ item.dishName }}</p>
+                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Veg" *ngIf="item.dishType === 'Veg'">
+                    <p><i class="fas fa-stop-circle text-success"></i></p>
+                </span>
+
+                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Non veg" *ngIf="item.dishType === 'Non veg'">
+                    <p><i class="fas fa-stop-circle text-danger"></i></p>
+                </span>
+              <p>{{ item.dishCategory }}</p>
+            </div>
+            <div class="col-sm-3 text-center mt-md-5 text-dark">
+              <p> Count : {{ item.count}}</p>
+            </div>
+            <div class="col-sm-3 text-center mt-md-5 text-dark">
+              <p>Price: Rs. {{ item.totalPrice }}</p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3 text-center">
+              <p>Payment mode : {{ order.paymentMode }}</p>
+              <p *ngIf="order.paymentStatus === 'Paid'" class="text-success">Payment status : {{ order.paymentStatus }}</p>
+              <p *ngIf="order.paymentStatus === 'Not Paid'" class="text-danger">Payment status : {{ order.paymentStatus }}</p>
+            </div>
+            <div class="col-sm-3 text-center">
+                <p>Seat number : {{ order.seatNumber }}</p>
+            </div>
+            <div class="col-sm-3 text-center">
+                <p>Total : Rs. {{ order.totalAmount }} </p>
+            </div>
+            <div class="col-sm-3 text-center">
+                <p *ngIf="order.status === 'Confirmed'" class="text-success">Order status : {{ order.status }}</p>
+              <p *ngIf="order.status === 'Not Confirmed'" class="text-danger">Order status : {{ order.status }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="orders.length <= 0">
+      <div class="col-sm-6 offset-sm-3 mt-4">
+        <img src="../../../assets/EmptyOrders.jpg" class="img-thumbnail rounded" width="100%" style="min-height: 400px; max-height: 400px;">
+      </div>
+      <div class="col-sm-12 text-dark text-center mt-4">
+          <p><strong> You currently do not have any orders. Go to home page to view different dishes</strong></p>
+      </div>
+  </div>
+</div>

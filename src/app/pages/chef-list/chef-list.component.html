@@ -1,0 +1,101 @@
+<div class="container mt-4" style="padding-top: 68px">
+  <div class="row">
+    <div class="col-sm-10">
+      <h4><i class="fas fa-users-cog mr-2"></i> List of Chefs</h4>
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-primary btn-block" type="button" data-toggle="modal" data-target="#chefModal">
+        New <i class="fa fa-plus ml-2"></i>
+      </button>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table class="table table-borderless">
+          <thead>
+            <tr>
+              <th>Sr no</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Contact</th>
+              <th>Edit</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Salman Khan</td>
+              <td>Salman@driver</td>
+              <td>7878565895</td>
+              <td class="text-primary">
+                <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#chefModal">
+                    <i class="fas fa-edit"></i>
+                </button>
+              </td>
+              <td class="text-danger">
+                  <button class="btn btn-outline-danger" type="button">
+                      <i class="fas fa-user-times"></i>
+                  </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- User modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="chefModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New chef</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group col-sm-8 offset-sm-2">
+              <input type="text" class="form-control" placeholder="Full name">
+            </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-sm-8 offset-sm-2">
+                  <input type="text" class="form-control" placeholder="Email">
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-sm-8 offset-sm-2">
+                  <input type="text" class="form-control" placeholder="Password">
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-sm-8 offset-sm-2">
+                  <input type="text" class="form-control" placeholder="Contact">
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-sm-4 offset-sm-2">
+                  <button class="btn btn-primary btn-block">
+                    Submit <i class="fa fa-save ml-2"></i>
+                  </button>
+              </div>
+              <div class="form-group col-sm-4">
+                  <button class="btn btn-secondary btn-block">
+                    Cancel <i class="fa fa-ban ml-2"></i>
+                  </button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- User modal -->

@@ -41,7 +41,6 @@ getDishCount(key: string) {
 }
 
 changeDishCount(count: number, key) {
-  this.getDishCount(key);
   console.log(this.dishStock);
 }
 

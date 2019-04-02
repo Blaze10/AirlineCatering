@@ -13,6 +13,8 @@ import { environment } from 'src/environments/environment';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DishListComponent } from './pages/dish-list/dish-list.component';
+import { CustomerOrdersComponent } from './pages/customer-orders/customer-orders.component';
+import { ChefListComponent } from './pages/chef-list/chef-list.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { DishListComponent } from './pages/dish-list/dish-list.component';
     NavComponent,
     HomeComponent,
     AdminLoginComponent,
-    DishListComponent
+    DishListComponent,
+    CustomerOrdersComponent,
+    ChefListComponent
   ],
   imports: [
     BrowserModule,

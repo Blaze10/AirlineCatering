@@ -62,7 +62,6 @@ export class HomeComponent implements OnInit {
     this.addOrder.count = count;
     this.addOrder.totalPrice = total;
     this.addOrder.dishId = dish.dishId;
-    this.dishService.changeDishCount(this.addOrder.count, this.addOrder.dishId);
     this.cartService.insertCart(this.addOrder);
     this.orderCount = 1;
     this.orderPrice = 0;

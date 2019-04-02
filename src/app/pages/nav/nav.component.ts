@@ -1,8 +1,12 @@
+import { AlertifyService } from './../../_Services/alertify.service';
+import { OrdersService } from './../../_Services/order.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Order, FinalOrder } from './../../_Models/order.model';
 import { CartService } from './../../_Services/cart.service';
 import { AuthService } from './../../_Services/auth.service';
 import { Component, OnInit, DoCheck } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+declare const $: any;
 
 @Component({
   selector: 'app-nav',
@@ -16,11 +20,14 @@ export class NavComponent implements OnInit, DoCheck {
   finalOrder: FinalOrder;
   finalOrderForm: FormGroup;
   paymentModeSwitch = false;
-  constructor(public authService: AuthService, public cartService: CartService) { }
+  orderLoader = false;
+  constructor(public authService: AuthService, public cartService: CartService,
+              private orderService: OrdersService, private alertify: AlertifyService) { }
 
   ngOnInit() {
     this.getCartCount();
     this.initFinalForm();
+    this.orderService.getAllOrders();
   }
 
   getCartCount() {
@@ -76,6 +83,7 @@ export class NavComponent implements OnInit, DoCheck {
   }
 
   onSubmitOrder() {
+    this.orderLoader = true;
     let paymentStatus = 'Not Paid';
     const paymentType = this.finalOrderForm.value.paymentMode;
     if (paymentType === 'Card') {
@@ -94,7 +102,19 @@ export class NavComponent implements OnInit, DoCheck {
     this.finalOrder.paymentMode = this.finalOrderForm.value.paymentMode;
     this.finalOrder.seatNumber = this.finalOrderForm.value.seatNumber;
     this.finalOrder.status = this.finalOrderForm.value.status;
-    console.log(this.finalOrder);
+    this.orderService.insertOrder(this.finalOrder)
+    .then(() => {
+      this.orderLoader = false;
+      this.alertify.success('Your order has been placed successfully');
+      $('#cartModal').modal('hide');
+      this.cartService.emptyCart();
+      this.finalOrderForm.reset();
+    })
+    .catch((err) => {
+      this.orderLoader = false;
+      console.log(err);
+      this.alertify.error('Oops some error occured');
+    });
 
   }
 
