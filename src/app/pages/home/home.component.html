@@ -1,0 +1,164 @@
+<ngx-spinner bgColor="rgba(51,51,51,0.8)"
+size="large"
+color="#f27100"
+type="square-jelly-box">
+<p class="text-white"> Loading Tasty Food... </p>
+</ngx-spinner>
+      <header>
+          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="padding-top: 40px; width: 90%; margin-left: 5%;">
+            <ol class="carousel-indicators">
+              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+              <!-- Slide One - Set the background image for this slide in the line below -->
+              <div class="carousel-item active" style="background-image: url('../../../assets/cover5.jpg')">
+                <!-- <div class="carousel-caption d-none d-md-block">
+                  <h2 class="display-4">First Slide</h2>
+                  <p class="lead">This is a description for the first slide.</p>
+                </div> -->
+              </div>
+              <!-- Slide Two - Set the background image for this slide in the line below -->
+              <div class="carousel-item" style="background-image: url('../../../assets/cover2.jpg')">
+                <div class="carousel-caption d-none d-md-block">
+                  <!-- <h2 class="display-4 text-dark">Second Slide</h2>
+                  <p class="lead text-dark">This is a description for the second slide.</p> -->
+                </div>
+              </div>
+              <!-- Slide Three - Set the background image for this slide in the line below -->
+              <div class="carousel-item" style="background-image: url('../../../assets/cover1.jpg')">
+                <div class="carousel-caption d-none d-md-block">
+                  <!-- <h2 class="display-4">Third Slide</h2>
+                  <p class="lead">This is a description for the third slide.</p> -->
+                </div>
+              </div>
+
+              <div class="carousel-item" style="background-image: url('../../../assets/cover3.jpg')">
+                <div class="carousel-caption d-none d-md-block">
+                  <!--   -->
+                </div>
+              </div>
+
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+          </div>
+        </header>
+
+
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-12 col-sm-12 text-center">
+        <h3>Today's menu</h3>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-12" style="padding: 50px;" *ngFor="let dish of todayDishList">
+            <div class="card">
+                <img class="card-img-top" [src]="dish.dishImage" alt="Card image cap" style="max-height: 200px; min-height: 200px;">
+                <div class="card-body">
+                  <h5 class="card-title">{{ dish.dishName }}</h5>
+                  <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                      <p>Rs. {{dish.price}}</p>
+                    </div>
+                    <div class="col-md-2 col-sm-2">
+                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Veg" *ngIf="dish.dishType === 'Veg'">
+                            <p><i class="fas fa-stop-circle text-success"></i></p>
+                        </span>
+
+                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Non veg" *ngIf="dish.dishType === 'Non veg'">
+                            <p><i class="fas fa-stop-circle text-danger"></i></p>
+                        </span>
+                      </div>
+                    <div class="col-md-6 col-sm-6 text-right">
+                        <button class="btn btn-outline-success" data-toggle="modal" data-target="#setCountModal" (click)="setOrderCount(dish)">
+                          Add<i class="fas fa-plus ml-2"></i>
+                        </button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Set Count Modal -->
+
+  <!-- Modal -->
+<div class="modal fade" id="setCountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            {{ orderDish?.dishName }}
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group col-sm-12 col-md-12" style="padding: 0">
+                    <img [src]="orderDish?.dishImage" style="max-height: 300px; min-height: 300px;" width="100%" class="img-thumbnail">
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 offset-sm-4 col-form-label">
+                      <strong>Price</strong>
+                    </label>
+                    <div class="col-sm-6">
+                      <input type="text" readonly class="form-control-plaintext" value="{{ orderDish?.price }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 offset-sm-4 col-form-label">
+                      <strong>Type</strong>
+                    </label>
+                    <div class="col-sm-6">
+                        <span class="d-inline-block mt-2" tabindex="0" data-toggle="tooltip" title="Veg" *ngIf="orderDish?.dishType === 'Veg'">
+                            <p><i class="fas fa-stop-circle text-success"></i> Veg</p>
+                        </span>
+
+                        <span class="d-inline-block mt-2" tabindex="0" data-toggle="tooltip" title="Non veg" *ngIf="orderDish?.dishType === 'Non veg'">
+                            <p><i class="fas fa-stop-circle text-danger"></i> Non veg</p>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 offset-sm-4 col-form-label">
+                      <strong>Count</strong>
+                    </label>
+                    <div class="col-sm-3">
+                      <input type="number" class="form-control" [value]="orderCount" min="1" (keyup)="calcOrder($event)" (change)="calcOrder($event)">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 offset-sm-4 col-form-label">
+                      <strong>Total</strong>
+                    </label>
+                    <div class="col-sm-3">
+                      <input type="number" class="form-control" value="{{orderPrice}}" disabled>
+                    </div>
+                </div>
+                <div class="form-group col-sm-6 offset-sm-3">
+                  <button class="btn btn-success btn-block" type="button" (click)="addToCart(orderDish, orderCount, orderPrice);">
+                    Confirm <i class="fas fa-check-circle ml-2"></i>
+                  </button>
+                </div>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Set Count Modal -->
+

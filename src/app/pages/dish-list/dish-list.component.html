@@ -1,0 +1,251 @@
+<ngx-spinner bgColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#f27100"
+type="ball-clip-rotate-multiple">
+<p class="text-white"> Loading Dishes... </p>
+</ngx-spinner>
+<div class="container mt-4" style="padding-top: 68px;">
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+          <div class="card border-0">
+              <div class="card-header border-0 bg-white">
+                <div class="row">
+                  <div class="col-md-10 col-sm-12">
+                      <h4>List of Dishes</h4>
+                  </div>
+                  <div class="col-md-2 col-sm-12">
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="modal" data-target="#createDishModal" (click)="dishForm.reset(); mode='new'">
+                      Add <i class="fa fa-plus ml-2"></i>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12">
+                      <div class="table-responsive">
+                          <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th>Sr No</th>
+                                <th>Dish name</th>
+                                <th>Type</th>
+                                <th>Category</th>
+                                <th>Image</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Available Stock</th>
+                                <th>Edit</th>
+                                <th>Remove</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let dish of dishList; let i = index;">
+                                  <td>{{ i+1 }}</td>
+                                  <td>{{ dish.dishName }}</td>
+                                  <td *ngIf="dish.dishType === 'Veg'" class="text-success">Veg</td>
+                                  <td *ngIf="dish.dishType === 'Non veg'" class="text-danger">Non veg</td>
+                                  <td>{{ dish.dishCategory }}</td>
+                                  <td>
+                                    <button class="btn btn-outline-info" type="button" (click)="onShowImage(dish)"
+                                    data-toggle="modal" data-target="#dishImageModal">
+                                        <i class="fas fa-image"></i>
+                                    </button>
+                                  </td>
+                                  <td>{{ dish.price }} ₹.</td>
+                                  <td *ngIf="dish.dishIsAvailable" class="text-success">Available</td>
+                                  <td *ngIf="!dish.dishIsAvailable" class="text-danger">Not Available</td>
+                                  <td>{{ dish.dishStock }}</td>
+                                  <td>
+                                    <button class="btn btn-outline-dark" type="button" data-toggle="modal" data-target="#createDishModal"
+                                    (click)="patchDishForm(dish)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                  </td>
+                                  <td>
+                                      <button class="btn btn-outline-danger" type="button" (click)="onDeleteDish(dish)"
+                                      data-toggle="modal" data-target="#dishDeleteModal">
+                                          <i class="fas fa-trash"></i>
+                                      </button>
+                                  </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--*************** Create Dish ***************-->
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" id="createDishModal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-utensils mr-2"></i> New Dish
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="dishForm" (ngSubmit)="onSubmit()" >
+                  <div class="form-row">
+                      <div class="form-group col-md-8 col-sm-12 offset-md-2">
+                          <input type="text" class="form-control" placeholder="Dish name" formControlName="dishName">
+                          <div class="form-text text-danger" *ngIf="!dishForm.get('dishName').valid && dishForm.get('dishName').touched">
+                              <i class="far fa-times-circle mr-1"></i> Dish name cannot be empty.
+                          </div>
+                        </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4 col-sm-6 offset-md-2">
+                      <select class="form-control" formControlName="dishType">
+                        <option [ngValue]="null">Dish type</option>
+                        <option value="Veg">Veg</option>
+                        <option value="Non veg">Non veg</option>
+                      </select>
+                      <div class="form-text text-danger" *ngIf="!dishForm.get('dishType').valid && dishForm.get('dishType').touched">
+                          <i class="far fa-times-circle mr-1"></i> Dish type cannot be empty.
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-6">
+                        <select class="form-control" formControlName="dishCategory">
+                            <option [ngValue]="null">Dish category</option>
+                            <option *ngFor="let category of categoryList" [value]="category.categoryName">{{ category.categoryName }}</option>
+                        </select>
+                        <div class="form-text text-danger" *ngIf="!dishForm.get('dishCategory').valid && dishForm.get('dishCategory').touched">
+                            <i class="far fa-times-circle mr-1"></i> Dish category cannot be empty.
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-8 col-sm-12 offset-md-2">
+                      <input type="text" class="form-control" placeholder="Image URL" formControlName="dishImage">
+                      <div class="form-text text-danger" *ngIf="!dishForm.get('dishImage').valid && dishForm.get('dishImage').touched">
+                          <i class="far fa-times-circle mr-1"></i> Dish image cannot be empty.
+                      </div>
+                    </div>
+                    <div class="form-group col-md-8 col-sm-12 offset-md-2" *ngIf="dishForm.get('dishImage').valid">
+                        <img [src]="dishForm.get('dishImage').value" class="img-thumbnail rounded" height="300px" width="100%;"
+                        style="max-height: 300px">
+                      </div>
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group col-md-2 col-sm-4 text-center offset-md-2">
+                          <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" id="defaultCheck1" formControlName="dishIsAvailable">
+                              <label class="form-check-label" for="defaultCheck1">
+                                Available
+                              </label>
+                            </div>
+                      </div>
+                    <div class="form-group col-md-3 col-sm-4">
+                      <input type="number" class="form-control" placeholder="Price"  formControlName="price">
+                      <div class="form-text text-danger" *ngIf="!dishForm.get('price').valid && dishForm.get('price').touched">
+                          <i class="far fa-times-circle mr-1"></i> Price cannot be empty.
+                      </div>
+                    </div>
+                    <div class="form-group col-md-3 col-sm-4">
+                        <input type="number" class="form-control" placeholder="Available Stock"  formControlName="dishStock">
+                        <div class="form-text text-danger" *ngIf="!dishForm.get('dishStock').valid && dishForm.get('dishStock').touched">
+                            <i class="far fa-times-circle mr-1"></i> Available stock cannot be empty.
+                        </div>
+                    </div>
+                  </div>
+                  <div class="form-row mt-4">
+                    <div class="form-group col-md-3 col-sm-12 offset-md-2">
+
+                      <button class="btn btn-primary btn-block" type="submit" *ngIf="!newDishLoader" [disabled]="!dishForm.valid">
+                        {{mode === 'new'? 'Submit' : 'Save Changes'}}<i class="fa fa-save ml-2"></i>
+                      </button>
+
+                      <button class="btn btn-primary btn-block" type="button" disabled *ngIf="newDishLoader">
+                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          Please wait...
+                      </button>
+
+
+                    </div>
+                    <div class="form-group col-md-3 col-sm-12">
+                        <button class="btn btn-secondary btn-block" type="button" data-dismiss="modal">
+                          Cancel<i class="fa fa-ban ml-2"></i>
+                        </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+      </div>
+    </div>
+    </div>
+
+  <!--*************** Create Dish ***************-->
+
+
+  <!-- Image Modal -->
+
+  <div class="modal fade" id="dishImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title" id="exampleModalLabel">
+                <i class="fas fa-utensils mr-2"></i>{{ detailedDish?.dishName }}
+            </h5>
+            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="padding: 0; margin: 0;">
+              <img [src]="detailedDish?.dishImage" class="img-thumbnail rounded" height="300px" width="100%;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Image Modal -->
+
+
+<!-- Delete Dish Modal -->
+
+<div class="modal fade" id="dishDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title" id="exampleModalLabel">
+              <i class="fas fa-exclamation-circle mr-2"></i>Delete {{ detailedDish?.dishName }}?
+          </h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="padding: 0; margin: 0;">
+          <div class="form-row mt-4">
+              <div class="form-group col-md-4 offset-md-2 col-sm-4 offset-sm-2">
+                  <button class="btn btn-danger btn-block" (click)="deleteDish(detailedDish)" *ngIf="!newDishLoader">
+                    Confirm <i class="fas fa-check-circle ml-2"></i>
+                  </button>
+
+                  <button class="btn btn-danger btn-block" type="button" disabled *ngIf="newDishLoader">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      Please wait...
+                  </button>
+
+                </div>
+                <div class="form-group col-md-4 col-sm-4">
+                    <button class="btn btn-secondary btn-block" data-dismiss="modal">
+                      Cancel <i class="fas fa-times-circle ml-2"></i>
+                    </button>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Delete Dish Modal -->

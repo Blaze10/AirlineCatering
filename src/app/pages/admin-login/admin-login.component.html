@@ -1,0 +1,25 @@
+<ngx-spinner bgColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#f27100"
+type="ball-clip-rotate-multiple">
+<p class="text-white"> Checking Credentials... </p>
+</ngx-spinner>
+<div class="wrapper fadeInDown mt-5" style="padding-top: 68px;">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="../../../assets/admin.png" id="icon" alt="User Icon" />
+      <h3>Admin</h3>
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="adminForm"(ngSubmit)="onSubmit()" >
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email" formControlName="email">
+      <input type="password" id="password" class="fadeIn third" name="login" placeholder="password" formControlName="password">
+      <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
+
+  </div>
+</div>
