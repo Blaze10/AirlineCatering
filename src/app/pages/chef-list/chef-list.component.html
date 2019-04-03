@@ -49,7 +49,6 @@
 </div>
 
 <!-- User modal -->
-
 <!-- Modal -->
 <div class="modal fade" id="chefModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -61,38 +60,67 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="form-row">
-            <div class="form-group col-sm-8 offset-sm-2">
-              <input type="text" class="form-control" placeholder="Full name">
-            </div>
-          </div>
-          <div class="form-row">
-              <div class="form-group col-sm-8 offset-sm-2">
-                  <input type="text" class="form-control" placeholder="Email">
-              </div>
-          </div>
-          <div class="form-row">
-              <div class="form-group col-sm-8 offset-sm-2">
-                  <input type="text" class="form-control" placeholder="Password">
-              </div>
-          </div>
-          <div class="form-row">
-              <div class="form-group col-sm-8 offset-sm-2">
-                  <input type="text" class="form-control" placeholder="Contact">
-              </div>
-          </div>
-          <div class="form-row">
-              <div class="form-group col-sm-4 offset-sm-2">
-                  <button class="btn btn-primary btn-block">
-                    Submit <i class="fa fa-save ml-2"></i>
-                  </button>
-              </div>
-              <div class="form-group col-sm-4">
-                  <button class="btn btn-secondary btn-block">
-                    Cancel <i class="fa fa-ban ml-2"></i>
-                  </button>
-              </div>
-          </div>
+          <form [formGroup]="chefForm" (ngSubmit)="onSubmit()" autocomplete="off">
+              <div class="form-row">
+                  <div class="form-group col-sm-8 offset-sm-2">
+                    <input type="text" class="form-control" placeholder="Full name" formControlName="name">
+                    <div class="form-text text-danger" *ngIf="!chefForm.get('name').valid && chefForm.get('name').touched">
+                        <i class="fas fa-times-circle mr-2"></i>Name cannot be blank.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-8 offset-sm-2">
+                        <input type="text" id="chefEmail" class="form-control"
+                        autocomplete="no" placeholder="Email" formControlName="email">
+                        <div class="form-text text-danger" *ngIf="chefForm.get('email').hasError('required') && chefForm.get('email').touched">
+                            <i class="fas fa-times-circle mr-2"></i>Email cannot be blank.
+                        </div>
+                        <div class="form-text text-danger" *ngIf="chefForm.get('email').hasError('email') && chefForm.get('email').touched">
+                            <i class="fas fa-times-circle mr-2"></i>Please enter a valid email.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-8 offset-sm-2">
+                        <input type="password" id="chefPass" autocomplete="no"
+                         class="form-control" placeholder="Password" formControlName="password">
+                        <div class="form-text text-danger" *ngIf="chefForm.get('password').hasError('required') && chefForm.get('password').touched">
+                            <i class="fas fa-times-circle mr-2"></i>Password cannot be blank
+                        </div>
+                        <div class="form-text text-danger" *ngIf="chefForm.get('password').hasError('minlength') && chefForm.get('password').touched">
+                            <i class="fas fa-times-circle mr-2"></i>Password should atleast contain 6 characters.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-8 offset-sm-2">
+                        <input type="text" class="form-control" placeholder="Contact" formControlName="contact">
+                        <div class="form-text text-danger" *ngIf="chefForm.get('contact').hasError('required') && chefForm.get('contact').touched">
+                            <i class="fas fa-times-circle mr-2"></i>Contact should not be blank.
+                        </div>
+                        <div class="form-text text-danger" *ngIf="chefForm.get('contact').hasError('minlength') && chefForm.get('contact').touched">
+                            <i class="fas fa-times-circle mr-2"></i>Contact should not containt more or less than 10 digits
+                        </div>
+                        <div class="form-text text-danger" *ngIf="chefForm.get('contact').hasError('maxlength') && chefForm.get('contact').touched">
+                            <i class="fas fa-times-circle mr-2"></i>Contact should not containt more or less than 10 digits
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-4 offset-sm-2">
+                        <button class="btn btn-primary btn-block" [disabled]="!chefForm.valid">
+                          Submit <i class="fa fa-save ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <button class="btn btn-secondary btn-block">
+                          Cancel <i class="fa fa-ban ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+          </form>
+
         </div>
       </div>
     </div>
