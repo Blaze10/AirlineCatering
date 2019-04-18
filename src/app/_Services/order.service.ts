@@ -22,4 +22,12 @@ getOrdersBySeat(seatNumber: string) {
   return this.db.list('college/ordersList', ref => ref.orderByChild('seatNumber').equalTo(seatNumber));
 }
 
+changeOrderStatus(status: string, key) {
+  return this.db.object('college/ordersList/' + key + '/status').set(status);
+}
+
+changePaymentStatys(status: string, key) {
+  return this.db.object('college/ordersList/' + key + '/paymentStatus').set(status);
+}
+
 }

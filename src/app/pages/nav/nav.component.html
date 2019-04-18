@@ -3,43 +3,19 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-      <a class="navbar-brand" href="#">Airline Catering</a>
+        <a class="navbar-brand" [routerLink]="['/home']" routerLinkActive="router-link-active" >
+            <img src="../../../assets/airplace.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            Flight Catering
+          </a>
       <!-- Links -->
   <ul class="navbar-nav ml-auto">
-      <li class="nav-item mr-2 ml-2" *ngIf="!authService.isLoggedIn()">
+      <li class="nav-item mr-2 ml-2" *ngIf="!authService.isLoggedIn()" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link" routerLink="/home" routerLinkActive="active">
             <i class="fas fa-home mr-1"></i> Home
           </a>
       </li>
 
-      <li class="nav-item mr-2 ml-2">
-        <a class="nav-link" href="#">
-            <i class="fas fa-address-card mr-1"></i> About
-        </a>
-      </li>
-
-      <li class="nav-item mr-2 ml-2">
-        <a class="nav-link" href="#">
-            <i class="fas fa-envelope-open-text mr-1"></i> Contact
-        </a>
-      </li>
-
-      <!-- Dropdown -->
-      <li class="nav-item dropdown mr-2 ml-2" *ngIf="!authService.isLoggedIn()">
-        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-          <i class="fas fa-user-lock mr-1"></i>Login
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">
-              <i class="fas fa-utensils mr-2"></i>Chef Login
-          </a>
-          <a class="dropdown-item" [routerLink]="['/admin']" routerLinkActive="active" >
-              <i class="fas fa-users-cog mr-2"></i>Admin Login
-          </a>
-        </div>
-      </li>
-
-      <li class="nav-item mr-2 ml-2" *ngIf="!authService.isLoggedIn()">
+      <li class="nav-item mr-2 ml-2" *ngIf="!authService.isLoggedIn()" data-toggle="collapse" data-target=".navbar-collapse.show">
         <a class="nav-link" routerLink="/customerOrders" routerLinkActive="active">
           <i class="fas fa-hamburger mr-1"></i> My Orders
         </a>
@@ -47,25 +23,83 @@
 
       <li class="nav-item mr-2 ml-2" *ngIf="!authService.isLoggedIn()" style="cursor: pointer" data-toggle="modal"
       data-target="#cartModal">
-        <a class="nav-link">
+        <a class="nav-link animated jackInTheBox" *ngIf="cartCount > 0">
           <i class="fas fa-shopping-cart mr-1"></i> Cart
-          <span *ngIf="cartCount > 0" class="badge badge-dark"> {{cartCount}} </span>
+          <span class="badge badge-dark"> {{cartCount}} </span>
         </a>
+        <a class="nav-link" *ngIf="cartCount <= 0">
+            <i class="fas fa-shopping-cart mr-1"></i> Cart
+          </a>
       </li>
 
-      <li class="nav-item mr-2 ml-2" *ngIf="authService.isLoggedIn() && authService.isAdminLoggedIn()">
+      <li class="nav-item mr-2 ml-2" *ngIf="authService.isLoggedIn() && authService.isAdminLoggedIn()" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link" routerLink="/dishes" routerLinkActive="active">
             <i class="fas fa-hamburger mr-1"></i> Dishes
           </a>
       </li>
 
-      <li class="nav-item mr-2 ml-2" *ngIf="authService.isLoggedIn() && authService.isAdminLoggedIn()">
+      <li class="nav-item mr-2 ml-2" *ngIf="authService.isLoggedIn() && authService.isAdminLoggedIn()"
+      data-toggle="collapse" data-target=".navbar-collapse.show">
         <a class="nav-link" routerLink="/chefList" routerLinkActive="active">
           <i class="fas fa-users-cog mr-1"></i> Chefs
         </a>
+      </li>
+
+      <li class="nav-item mr-2 ml-2" *ngIf="authService.isLoggedIn() && authService.isAdminLoggedIn()"
+      data-toggle="collapse" data-target=".navbar-collapse.show">
+        <a class="nav-link" routerLink="/adminOrders" routerLinkActive="active">
+          <i class="fas fa-clipboard-list mr-2"></i> All Orders
+        </a>
+      </li>
+
+    <!-- Chef Pages -->
+
+    <li class="nav-item mr-2 ml-2" *ngIf="authService.isLoggedIn() && authService.isChefLoggedIn()"
+    data-toggle="collapse" data-target=".navbar-collapse.show">
+      <a class="nav-link" routerLink="/chefOrders" routerLinkActive="active">
+        <i class="fas fa-chart-line mr-2"></i> Pending Orders
+      </a>
     </li>
 
-      <li class="nav-item mr-2 ml-2" *ngIf="authService.isLoggedIn()">
+    <li class="nav-item mr-2 ml-2" *ngIf="authService.isLoggedIn() && authService.isChefLoggedIn()"
+    data-toggle="collapse" data-target=".navbar-collapse.show">
+      <a class="nav-link" routerLink="/chefAllorders" routerLinkActive="active">
+        <i class="fas fa-clipboard-list mr-2"></i> All Orders
+      </a>
+    </li>
+
+
+    <!-- Chef Pages -->
+
+
+    <!-- <li class="nav-item mr-2 ml-2">
+      <a class="nav-link" href="#">
+          <i class="fas fa-address-card mr-1"></i> About
+      </a>
+    </li>
+
+    <li class="nav-item mr-2 ml-2">
+      <a class="nav-link" href="#">
+          <i class="fas fa-envelope-open-text mr-1"></i> Contact
+      </a>
+    </li> -->
+
+    <!-- Dropdown -->
+    <li class="nav-item dropdown mr-5 ml-2" *ngIf="!authService.isLoggedIn()" data-toggle="collapse" data-target=".navbar-collapse.show">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        <i class="fas fa-user-lock mr-1"></i>Login
+      </a>
+      <div class="dropdown-menu" >
+        <a class="dropdown-item" [routerLink]="['/chefLogin']" routerLinkActive="active" >
+            <i class="fas fa-utensils mr-2"></i>Chef Login
+        </a>
+        <a class="dropdown-item" [routerLink]="['/admin']" routerLinkActive="active" >
+            <i class="fas fa-users-cog mr-2"></i>Admin Login
+        </a>
+      </div>
+    </li>
+
+      <li class="nav-item mr-2 ml-2" *ngIf="authService.isLoggedIn()" data-toggle="collapse" data-target=".navbar-collapse.show">
         <a class="nav-link" style="cursor: pointer" (click)="authService.logout()">
           <i class="fas fa-power-off mr-1"></i> Logout
         </a>
@@ -135,18 +169,18 @@
                       <div class="form-group col-md-12 text-center">
                         <label><strong>Payment mode</strong></label>
                         <br/>
-                        <div class="form-check form-check-inline">
+                        <!-- <div class="form-check form-check-inline">
                           <input class="form-check-input" type="radio" id="inlineRadio1" value="Card" formControlName="paymentMode"
                           (change)="onSelectPaymentType($event)">
                           <label class="form-check-label" for="inlineRadio1">Card Payment</label>
-                        </div>
+                        </div> -->
                         <div class="form-check form-check-inline">
                           <input class="form-check-input" type="radio" id="inlineRadio2" value="Cash" formControlName="paymentMode"
                           (change)="onSelectPaymentType($event)">
                           <label class="form-check-label" for="inlineRadio2">Cash Payment</label>
                         </div>
                       </div>
-                      <div class="col-sm-12" *ngIf="paymentModeSwitch">
+                      <!-- <div class="col-sm-12" *ngIf="paymentModeSwitch">
 
                           <div class="card card-outline-secondary">
                               <div class="card-body">
@@ -181,14 +215,14 @@
                               </div>
                           </div>
 
-                      </div>
+                      </div> -->
                      </div>
                    </form>
                  </div>
                 </div>
                 <br/>
                 <div class="row" *ngIf="cartCount > 0">
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 mt-2">
                       <button class="btn btn-success btn-block" [disabled]="!finalOrderForm.valid" (click)="onSubmitOrder()" *ngIf="!orderLoader">
                         Confirm  <i class="fas fa-check-circle ml-2"></i>
                       </button>
@@ -198,14 +232,14 @@
                         <span class="sr-only">Loading...</span>
                       </button>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 mt-2">
                         <button class="btn btn-secondary btn-block">
                           Cancel <i class="fas fa-times-circle ml-2"></i>
                         </button>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-md-4 mt-2">
                       <button class="btn btn-danger btn-block" type="button" (click)="onClearCart()">
-                         <i class="fas fa-trash mr-2"></i> Clear cart
+                          Clear cart <i class="fas fa-trash ml-2"></i>
                       </button>
                   </div>
                   </div>

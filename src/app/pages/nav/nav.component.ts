@@ -101,7 +101,7 @@ export class NavComponent implements OnInit, DoCheck {
     this.finalOrder.cvv = this.finalOrderForm.value.cvv;
     this.finalOrder.paymentMode = this.finalOrderForm.value.paymentMode;
     this.finalOrder.seatNumber = this.finalOrderForm.value.seatNumber;
-    this.finalOrder.status = this.finalOrderForm.value.status;
+    this.finalOrder.status = 'Not Confirmed';
     this.orderService.insertOrder(this.finalOrder)
     .then(() => {
       this.orderLoader = false;

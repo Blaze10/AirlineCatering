@@ -1,44 +1,54 @@
 <ngx-spinner bgColor="rgba(51,51,51,0.8)"
 size="large"
 color="#f27100"
-type="square-jelly-box">
+type="line-scale">
 <p class="text-white"> Loading Tasty Food... </p>
 </ngx-spinner>
       <header>
-          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="padding-top: 40px; width: 90%; margin-left: 5%;">
+          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="padding-top: 40px; width: 100%;">
             <ol class="carousel-indicators">
               <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
               <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
               <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
               <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
             </ol>
             <div class="carousel-inner" role="listbox">
               <!-- Slide One - Set the background image for this slide in the line below -->
-              <div class="carousel-item active" style="background-image: url('../../../assets/cover5.jpg')">
-                <!-- <div class="carousel-caption d-none d-md-block">
-                  <h2 class="display-4">First Slide</h2>
-                  <p class="lead">This is a description for the first slide.</p>
-                </div> -->
-              </div>
               <!-- Slide Two - Set the background image for this slide in the line below -->
-              <div class="carousel-item" style="background-image: url('../../../assets/cover2.jpg')">
-                <div class="carousel-caption d-none d-md-block">
-                  <!-- <h2 class="display-4 text-dark">Second Slide</h2>
-                  <p class="lead text-dark">This is a description for the second slide.</p> -->
-                </div>
+              <div class="carousel-item active" style="background-image: url('../../../assets/c.jpg')">
+                <!-- <div class="carousel-caption d-none d-md-block"> -->
+                    <!-- <h2 class="display-4" style="color: #000;">Deliciousness jumping into the mouth</h2>
+                    <!-- <p class="lead">Order tasty food now!</p>
+                  </div> -->
               </div>
               <!-- Slide Three - Set the background image for this slide in the line below -->
-              <div class="carousel-item" style="background-image: url('../../../assets/cover1.jpg')">
-                <div class="carousel-caption d-none d-md-block">
-                  <!-- <h2 class="display-4">Third Slide</h2>
-                  <p class="lead">This is a description for the third slide.</p> -->
-                </div>
+              <div class="carousel-item" style="background-image: url('../../../assets/d.jpg')">
+                <!-- <div class="carousel-caption d-none d-md-block">
+                    <h2 class="display-4" style="color: #000;">Chase the flavors</h2>
+                    <!-- <p class="lead">Order tasty food now!</p>
+                  </div> -->
               </div>
 
-              <div class="carousel-item" style="background-image: url('../../../assets/cover3.jpg')">
-                <div class="carousel-caption d-none d-md-block">
-                  <!--   -->
-                </div>
+              <!-- <div class="carousel-item" style="background-image: url('../../../assets/e.jpg')">
+
+              </div> -->
+
+              <div class="carousel-item" style="background-image: url('../../../assets/f.jpg')">
+
+              </div>
+
+              <div class="carousel-item" style="background-image: url('../../../assets/g.jpg')">
+
+              </div>
+
+              <div class="carousel-item" style="background-image: url('../../../assets/h.jpg')">
+
+              </div>
+
+              <div class="carousel-item" style="background-image: url('../../../assets/i.jpg')">
+
               </div>
 
             </div>
@@ -59,8 +69,32 @@ type="square-jelly-box">
       <div class="col-md-12 col-sm-12 text-center">
         <h3>Today's menu</h3>
       </div>
+      <br>
+      <div class="row" style="padding: 50px;">
+          <div class="col-md-6 col-sm-6">
+            <div class="input-group">
+              <input type="text" class="form-control" [(ngModel)]="searchDishName" placeholder=" Search by dish name" name="dishName">
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-6">
+              <div class="input-group">
+                  <Select class="form-control" [(ngModel)]="searchDishCategory" name="dishCategory" ngDefaultControl>
+                    <option value='select'>Select Category</option>
+                    <option value='Breakfast'>Breakfast</option>
+                    <option value='Lunch'>Lunch</option>
+                    <option value='Evening Snacks'>Evening Snacks</option>
+                    <option value='Dinner'>Dinner</option>
+                  </Select>
+                </div>
+          </div>
+
+      <hr>
       <div class="row">
-        <div class="col-md-4 col-sm-12" style="padding: 50px;" *ngFor="let dish of todayDishList">
+        <div class="col-md-4 col-sm-12" style="padding: 50px;" *ngFor="let dish of filteredDishList">
             <div class="card">
                 <img class="card-img-top" [src]="dish.dishImage" alt="Card image cap" style="max-height: 200px; min-height: 200px;">
                 <div class="card-body">
@@ -151,7 +185,7 @@ type="square-jelly-box">
                 </div>
                 <div class="form-group col-sm-6 offset-sm-3">
                   <button class="btn btn-success btn-block" type="button" (click)="addToCart(orderDish, orderCount, orderPrice);">
-                    Confirm <i class="fas fa-check-circle ml-2"></i>
+                    Add to cart <i class="fas fa-check-circle ml-2"></i>
                   </button>
                 </div>
               </form>

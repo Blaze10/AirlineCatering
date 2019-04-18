@@ -1,0 +1,25 @@
+breakfast:
+-bread omlet
+-bread jam/butter
+-museli
+-orange juice
+-cutlets
+-tea/cofee
+
+lunch:
+-rice bowls
+-salads
+-sandwitch
+
+evening snacks:
+-dry fruits
+-fruits
+-tea/cofee
+-fruit salads
+-pastrys
+
+dinner:
+-starters(veg/nonveg)
+-rotis
+-rice bowls
+-sandwitch

@@ -15,6 +15,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DishListComponent } from './pages/dish-list/dish-list.component';
 import { CustomerOrdersComponent } from './pages/customer-orders/customer-orders.component';
 import { ChefListComponent } from './pages/chef-list/chef-list.component';
+import { ChefLoginComponent } from './pages/chef-login/chef-login.component';
+import { ChefOrdersComponent } from './pages/chef-orders/chef-orders.component';
+import { AllOrdersComponent } from './pages/all-orders/all-orders.component';
+import { AdminOrdersComponent } from './pages/admin-orders/admin-orders.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import { ChefListComponent } from './pages/chef-list/chef-list.component';
     AdminLoginComponent,
     DishListComponent,
     CustomerOrdersComponent,
-    ChefListComponent
+    ChefListComponent,
+    ChefLoginComponent,
+    ChefOrdersComponent,
+    AllOrdersComponent,
+    AdminOrdersComponent
   ],
   imports: [
     BrowserModule,

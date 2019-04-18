@@ -24,7 +24,7 @@ export class CustomerOrdersComponent implements OnInit {
     this.orderService.getOrdersBySeat(val).valueChanges().subscribe((list: FinalOrder[]) => {
       this.spinner.hide();
       list.forEach(element => {
-        if (element.status !== 'Delivered') {
+        if (element.status !== 'Delivered' && element.status !== 'Closed') {
           this.orders.push(element);
         }
       });

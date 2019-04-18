@@ -14,10 +14,41 @@ declare const $: any;
 })
 export class HomeComponent implements OnInit {
   todayDishList: Dish[] = [];
+  filteredDishList: Dish[] = [];
   addOrder: Order;
   orderCount;
   orderPrice;
   orderDish: Dish;
+
+  private searchName = '';
+  private searchCategory = 'select';
+
+  get searchDishName(): string {
+    return this.searchName;
+  }
+
+  get searchDishCategory(): string {
+    return this.searchCategory;
+  }
+
+
+
+  // tslint:disable-next-line:adjacent-overload-signatures
+  set searchDishName(value: string) {
+    this.searchName = value;
+    this.filteredDishList = this.filterName(value);
+  }
+
+  // tslint:disable-next-line:adjacent-overload-signatures
+  set searchDishCategory(value: string) {
+    if (value === 'select') {
+      value = '';
+    }
+    this.searchCategory = value;
+    this.filteredDishList = this.filterCategory(value);
+  }
+
+
   constructor(private alertify: AlertifyService, private dishService: DishService,
               private spinner: NgxSpinnerService, private cartService: CartService) { }
 
@@ -34,6 +65,7 @@ export class HomeComponent implements OnInit {
         if (x['dishIsAvailable'] === true) {
           this.todayDishList.push(x as Dish);
         }
+        this.filteredDishList = this.todayDishList;
         this.spinner.hide();
       }, err => {
         console.log(err);
@@ -66,6 +98,21 @@ export class HomeComponent implements OnInit {
     this.orderCount = 1;
     this.orderPrice = 0;
     $('#setCountModal').modal('hide');
+  }
+
+  filterName(searchName: string) {
+    return this.todayDishList.filter(list =>
+      list.dishName.toLowerCase().indexOf(searchName.toLowerCase()) !== -1);
+  }
+
+  filterType(searchType: string) {
+    return this.todayDishList.filter(list =>
+      list.dishType.toLowerCase().indexOf(searchType.toLowerCase()) !== -1);
+  }
+
+  filterCategory(searchCqategory: string) {
+    return this.todayDishList.filter(list =>
+      list.dishCategory.toLowerCase().indexOf(searchCqategory.toLowerCase()) !== -1);
   }
 
 }

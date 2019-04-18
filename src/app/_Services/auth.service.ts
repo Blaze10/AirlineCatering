@@ -27,11 +27,15 @@ isLoggedIn() {
 }
 
 isChefLoggedIn() {
-  return this.isLoggedIn() && !!(localStorage.getItem('userRole') === 'chef');
+  return this.isLoggedIn() && !!(localStorage.getItem('userRole') === 'Chef');
 }
 
 isAdminLoggedIn() {
   return this.isLoggedIn() && !!(localStorage.getItem('userRole') === 'Admin');
+}
+
+registerChef(email, password) {
+  return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
 }
 
 

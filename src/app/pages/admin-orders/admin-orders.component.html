@@ -1,0 +1,151 @@
+<ngx-spinner bgColor="rgba(51,51,51,0.8)"
+size="large"
+color="#f27100"
+type="ball-clip-rotate-multiple">
+<p class="text-white"> Loading orders... </p>
+</ngx-spinner>
+<div class="container mt-4" style="padding-top: 68px;">
+  <div class="row">
+    <div class="col-sm-12">
+      <h4><i class="fas fa-clipboard-list mr-2"></i>All Orders</h4>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Sr no</th>
+              <th>Seat no.</th>
+              <th>Status</th>
+              <th>Payment mode</th>
+              <th>Payment status</th>
+              <th>Total</th>
+              <th>Order</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of allOrders; let i = index;">
+              <td>{{ i+1 }}</td>
+              <td>{{ order.seatNumber }}</td>
+              <td>{{ order.status }}</td>
+              <td>{{order.paymentMode}}</td>
+              <td class="text-danger" *ngIf="order.paymentStatus === 'Not Paid'">{{order.paymentStatus}}</td>
+              <td class="text-success" *ngIf="order.paymentStatus === 'Paid'">{{order.paymentStatus}}</td>
+              <td>{{order.totalAmount}}</td>
+              <td>
+                <button class="btn btn-outline-primary" type="button" data-toggle="modal" (click)="onShowOrders(order.Orders)"
+                data-target="#orderModal">
+                  <i class="fas fa-utensils"></i>
+                </button>
+              </td>
+              <td>
+                <button class="btn btn-outline-dark" type="button" data-toggle="modal"
+                data-target="#editModal" (click)="onEditStatus(order)">
+                  <i class="fas fa-pen"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-4 offset-sm-4 mt-4 text-center text-dark">
+      <h5><i class="fas fa-wallet mr-2"></i>Total Sales: Rs. {{ totalSales }} </h5>
+    </div>
+  </div>
+</div>
+
+
+<!-- Order Modal -->
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          <i class="fas fa-utensils mr-2"></i> Orders
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-borderless">
+                <thead>
+                  <tr>
+                    <th>Sr no</th>
+                    <th>Dish</th>
+                    <th>Type</th>
+                    <th>Count</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr  *ngFor="let item of showOrders; let i = index;">
+                    <td>{{ i+1 }}</td>
+                    <td>{{ item.dishName }}</td>
+                    <td>{{ item.dishType }}</td>
+                    <td>{{ item.count }}</td>
+                    <td>{{ item.dishCategory }}</td>
+                    <td>{{ item.totalPrice }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          <i class="fas fa-utensils mr-2"></i> Orders
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="statusForm" (ngSubmit)="onSubmit()">
+          <div class="form-row">
+            <div class="form-group col-sm-8 offset-sm-2">
+              <label> Change Payment status </label>
+              <select class="form-control" formControlName="status">
+                <option value='Not Paid'>Not Paid</option>
+                <option value='Paid'>Paid</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-sm-4 offset-sm-4">
+
+              <button class="btn btn-primary btn-block" type="submit" *ngIf="!showLoader">
+                Submit <i class="fa fa-save ml-2"></i>
+              </button>
+
+              <button class="btn btn-primary btn-block" type="button" disabled *ngIf="showLoader">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Please wait...
+              </button>
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
